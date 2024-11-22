@@ -10,3 +10,4 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 RESUME_PATH = os.getenv("RESUME_PATH")
 FILE_PATH = os.getenv("FILE_PATH")
+RESUME_FILENAME = os.getenv("RESUME_FILENAME")

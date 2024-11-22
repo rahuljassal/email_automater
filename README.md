@@ -52,10 +52,11 @@ This tool was created to help job seekers efficiently manage their outreach proc
    EMAIL_PASSWORD=your_app_password
    RESUME_PATH=path/to/your/resume.pdf
    FILE_PATH=path/to/your/contacts.xlsx
+   RESUME_FILENAME=Your_Name_Resume.pdf
    ```
 
 5. **Prepare your Excel file**
-   Create an Excel file with the following columns:
+   Create an Excel file with the following required columns:
    - email
    - name
    - company
@@ -90,23 +91,35 @@ Your Excel file should be structured as follows:
 
 - Use Gmail App Passwords instead of your main account password
 - Keep your `.env` file secure and never commit it to version control
-- The `.gitignore` file is configured to exclude sensitive files
+- The `.gitignore` file is configured to exclude sensitive files (_.xlsx, _.pdf, .env)
+- Never share your email credentials or sensitive information
 
 ## 📊 Logging
 
 The application creates detailed logs in the `logs` directory with:
 
 - Timestamp for each action
-- Success/failure status
+- Success/failure status for each email sent
 - Error details if any
-- Email sending progress
+- Email sending progress and completion status
 
 ## ⚠️ Important Notes
 
-- Ensure you comply with email sending limits of your email provider
-- Use appropriate delays between emails to avoid spam filters
+- Ensure you comply with Gmail's sending limits (typically 500 per day)
+- Default delay between emails is 2 seconds to avoid spam filters
 - Keep your contact list up to date
 - Test with a small list first
+- Make sure to use a Gmail account with "Less secure app access" or App Password enabled
+- The script uses HTML formatting for emails for better presentation
+
+## 🛠️ Technical Details
+
+- Python 3.9+ required
+- Uses pandas for Excel file handling
+- SMTP configuration preset for Gmail
+- HTML email template support
+- Automatic error logging and reporting
+- Built-in rate limiting with configurable delays
 
 ## 📄 License
 
@@ -115,3 +128,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 🐛 Troubleshooting
+
+If you encounter issues:
+
+1. Check your Gmail settings and ensure App Password is correctly set
+2. Verify Excel file format matches requirements
+3. Check logs in the `logs` directory for detailed error messages
+4. Ensure all environment variables are correctly set in `.env`

@@ -18,6 +18,7 @@ class ReferralEmailSender:
         self.sender_password = EMAIL_PASSWORD
         self.smtp_server = SMTP_SERVER
         self.smtp_port = SMTP_PORT
+        self.resume_filename = RESUME_FILENAME
 
     def read_excel_data(self) -> pd.DataFrame:
         try:
@@ -35,7 +36,7 @@ class ReferralEmailSender:
         recipient: str,
         subject: str,
         body: str,
-        resume_filename: str = "Resume.pdf",
+        resume_filename: str = RESUME_FILENAME,
     ) -> bool:
         try:
             msg = MIMEMultipart("alternative")
@@ -65,7 +66,7 @@ class ReferralEmailSender:
             return False
 
     def send_bulk_emails(
-        self, delay: int = 0, resume_filename: str = "Resume.pdf"
+        self, delay: int = 0, resume_filename: str = RESUME_FILENAME
     ) -> Dict[str, List[str]]:
         """
         Send emails to all contacts in the Excel file

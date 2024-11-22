@@ -12,9 +12,7 @@ def main():
     setup_logging()
     try:
         sender = ReferralEmailSender()
-        results = sender.send_bulk_emails(
-            delay=2, resume_filename="John_Doe_Resume.pdf"
-        )
+        results = sender.send_bulk_emails(delay=2)
     except Exception as e:
         logging.error(f"Application error: {str(e)}")
 
