@@ -27,7 +27,7 @@ This tool was created to help job seekers efficiently manage their outreach proc
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/email_automater.git
+   git clone https://github.com/rahuljassal/email_automater.git
    cd email_automater
    ```
 
