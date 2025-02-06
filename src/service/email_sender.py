@@ -23,7 +23,7 @@ class ReferralEmailSender:
     def read_excel_data(self) -> pd.DataFrame:
         try:
             df = pd.read_excel(self.excel_path)
-            required_columns = ["email", "name", "company"]
+            required_columns = ["email", "name", "company", "profile", "job link"]
             if not all(col in df.columns for col in required_columns):
                 raise ValueError(f"Excel file must contain columns: {required_columns}")
             return df
@@ -36,7 +36,7 @@ class ReferralEmailSender:
         recipient: str,
         subject: str,
         body: str,
-        resume_filename: str = RESUME_FILENAME,
+        # resume_filename: str = RESUME_FILENAME,
     ) -> bool:
         try:
             msg = MIMEMultipart("alternative")
@@ -46,14 +46,14 @@ class ReferralEmailSender:
 
             msg.attach(MIMEText(body, "html"))
 
-            with open(RESUME_PATH, "rb") as f:
-                resume = MIMEApplication(f.read(), _subtype="pdf")
-                resume.add_header(
-                    "Content-Disposition",
-                    "attachment",
-                    filename=resume_filename,
-                )
-                msg.attach(resume)
+            # with open(RESUME_PATH, "rb") as f:
+            #     resume = MIMEApplication(f.read(), _subtype="pdf")
+            #     resume.add_header(
+            #         "Content-Disposition",
+            #         "attachment",
+            #         filename=resume_filename,
+            #     )
+            #     msg.attach(resume)
 
             with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
                 server.starttls()
@@ -86,7 +86,9 @@ class ReferralEmailSender:
 
         for index, row in df.iterrows():
             try:
-                email_content = create_email_content(row["name"], row["company"])
+                email_content = create_email_content(
+                    row["name"], row["company"], row["profile"], row["job link"]
+                )
 
                 logging.info(
                     f"Sending email to {row['email']} ({index + 1}/{total_emails})"
@@ -96,7 +98,7 @@ class ReferralEmailSender:
                     row["email"],
                     email_content["subject"],
                     email_content["body"],
-                    resume_filename,
+                    # resume_filename,
                 ):
                     results["successful"].append(row["email"])
                     logging.info(f"Successfully sent email to {row['email']}")
